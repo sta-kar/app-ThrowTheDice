@@ -48,8 +48,6 @@ Choose Coin, D4, D6, D8, D10, D12, D20, or D100. The result appears on the next 
 
 [EntryAbility.ets](entry/src/main/ets/entryability/EntryAbility.ets) loads the selection page. [DiceData.ets](entry/src/main/ets/model/DiceData.ets) lists the available choices. The selection page stores the chosen number of sides, and the roll page reads it and calls [Random.ets](entry/src/main/ets/common/Random.ets).
 
-To regenerate the launcher and startup icons, run `assets/render_icon.py` with Python and Pillow. To regenerate the coin illustration, run `assets/render_coin.py`; it also requires Segoe UI Bold or DejaVu Sans Bold. These scripts write PNGs into the app resource directories.
-
 ## Verify
 
 On a connected OpenHarmony device or emulator:

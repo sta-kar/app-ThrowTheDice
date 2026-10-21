@@ -8,7 +8,7 @@ export struct DiceItem {
       Image(this.diceImage)
         .width(this.sides === 100 ? 120 : 82)
         .height(82)
-        .objectFit(this.sides === 100 ? ImageFit.Cover : ImageFit.Contain)
+        .objectFit(ImageFit.Contain)
         .margin({ bottom: 12 })
 
       Text(this.sides === 2 ? $r('app.string.coin') : `D${this.sides}`)

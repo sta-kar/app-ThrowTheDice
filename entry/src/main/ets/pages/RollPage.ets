@@ -4,7 +4,10 @@ import { Random } from '../common/Random';
 @Component
 struct RollPage {
   @State winnerNumber: number = 0;
+  @State resultScale: number = 1;
+  @State resultOpacity: number = 1;
   @StorageProp('dice') currentDice: number = 0;
+  private rollAnimationId: number = 0;
 
   aboutToAppear(): void {
     this.generateRandom();
@@ -14,6 +17,32 @@ struct RollPage {
     if (this.currentDice > 0) {
       this.winnerNumber = Random.random(this.currentDice);
     }
+  }
+
+  private rollAgain(): void {
+    const animationId: number = ++this.rollAnimationId;
+
+    this.getUIContext().animateTo({
+      duration: 75,
+      curve: Curve.EaseIn,
+      onFinish: () => {
+        if (animationId !== this.rollAnimationId) {
+          return;
+        }
+
+        this.generateRandom();
+        this.getUIContext().animateTo({
+          duration: 150,
+          curve: Curve.EaseOut
+        }, () => {
+          this.resultScale = 1;
+          this.resultOpacity = 1;
+        });
+      }
+    }, () => {
+      this.resultScale = 0.8;
+      this.resultOpacity = 0.55;
+    });
   }
 
   build() {
@@ -51,6 +80,8 @@ struct RollPage {
           .fontColor('#0F0026')
           .maxLines(1)
           .textAlign(TextAlign.Center)
+          .scale({ x: this.resultScale, y: this.resultScale })
+          .opacity(this.resultOpacity)
       }
       .width('100%')
       .height(260)
@@ -70,7 +101,7 @@ struct RollPage {
         .fontColor('#FFFFFF')
         .backgroundColor('#6024B5')
         .borderRadius(16)
-        .onClick(() => this.generateRandom())
+        .onClick(() => this.rollAgain())
     }
     .width('100%')
     .height('100%')
